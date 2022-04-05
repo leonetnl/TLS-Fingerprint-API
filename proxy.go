@@ -210,6 +210,7 @@ func handleReq(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
+	w.Header().Add("RedirectUrl", resp.Request.URL.String())
 	w.WriteHeader(resp.StatusCode)
 	var status string
 	if resp.StatusCode > 302 {
@@ -217,6 +218,7 @@ func handleReq(w http.ResponseWriter, r *http.Request) {
 	} else {
 		status = color.GreenString("%s", resp.Status)
 	}
+	//fmt.Println(resp.headers.get("Location"))
 	fmt.Printf("[%s][%s][%s]\r\n", color.YellowString("%s", time.Now().Format("2012-11-01T22:08:41+00:00")), color.BlueString("%s", pageURL), status)
 
 	//forward decoded response body
